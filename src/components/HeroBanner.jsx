@@ -3,6 +3,8 @@ import { Tag, Sparkles, Zap, ShieldCheck, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import CreamDrip from './CreamDrip';
+import ShinyText from './ShinyText';
+import TiltedCard, { TiltedCardLayer } from './TiltedCard';
 
 export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
   const coupons = [
@@ -151,7 +153,13 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
               }}
             >
               <Sparkles size={14} color="#F4A261" />
-              <span>Hương Vị Trà Lá Tự Nhiên & Kem Sữa Tươi</span>
+              <ShinyText
+                text="Hương Vị Trà Lá Tự Nhiên & Kem Sữa Tươi"
+                color="#FFE8D6"
+                shineColor="#FFFFFF"
+                speed={2.2}
+                shineWidth={45}
+              />
             </motion.div>
 
             <h1
@@ -166,15 +174,17 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
               }}
             >
               Thưởng thức vị trà ngọt ngào, <br />
-              <span style={{
-                background: 'linear-gradient(90deg, #F4A261 0%, #E76F51 50%, #FFD166 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontStyle: 'italic',
-                fontWeight: 900
-              }}>
-                lớp kem sánh mịn & trân châu dẻo bùi 🧋
-              </span>
+              <ShinyText
+                text="lớp kem sánh mịn & trân châu dẻo bùi 🧋"
+                color="#F4A261"
+                shineColor="#FFF3E0"
+                speed={2.6}
+                shineWidth={60}
+                style={{
+                  fontStyle: 'italic',
+                  fontWeight: 900
+                }}
+              />
             </h1>
 
             <p
@@ -256,6 +266,68 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
             </div>
           </div>
 
+          {/* KHỐI 3D TILTED CARD - SPOTLIGHT MÓN NÀNG YÊU THÍCH */}
+          <div className="hero-tilted-spotlight" style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 5
+          }}>
+            <TiltedCard
+              imageSrc="https://images.unsplash.com/photo-1558857563-b37cf5b62b1a?w=600&q=80&auto=format&fit=crop"
+              altText="Trà Sữa Nướng Trân Châu Hoàng Kim"
+              captionText="Trà Sữa Nướng Hoàng Kim ✨"
+              containerHeight="210px"
+              containerWidth="190px"
+              imageHeight="210px"
+              imageWidth="190px"
+              rotateAmplitude={14}
+              scaleOnHover={1.08}
+              glare={0.65}
+              shadow={0.5}
+            >
+              <TiltedCardLayer depth={32}>
+                <div style={{
+                  position: 'absolute',
+                  top: '12px',
+                  left: '12px',
+                  backgroundColor: 'rgba(255, 112, 67, 0.94)',
+                  color: '#fff',
+                  padding: '4px 10px',
+                  borderRadius: '20px',
+                  fontSize: '11px',
+                  fontWeight: 800,
+                  backdropFilter: 'blur(4px)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}>
+                  <span>👑</span>
+                  <span>Nàng Yêu Thích</span>
+                </div>
+              </TiltedCardLayer>
+              <TiltedCardLayer depth={22}>
+                <div style={{
+                  position: 'absolute',
+                  bottom: '46px',
+                  right: '12px',
+                  backgroundColor: 'rgba(30, 16, 12, 0.8)',
+                  color: '#FFE8D6',
+                  padding: '3px 8px',
+                  borderRadius: '10px',
+                  fontSize: '11.5px',
+                  fontWeight: 800,
+                  backdropFilter: 'blur(4px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  32.000đ
+                </div>
+              </TiltedCardLayer>
+            </TiltedCard>
+          </div>
+
           {/* KHỐI MÃ GIẢM GIÁ BÊN PHẢI */}
           <div className="hero-right-col" style={{ flex: '1 1 280px', minWidth: 0, maxWidth: '100%', zIndex: 5 }}>
             <div
@@ -312,7 +384,6 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
                             style={{
                               fontFamily: 'monospace',
                               fontWeight: 900,
-                              color: c.color,
                               backgroundColor: 'var(--bg-surface)',
                               border: `1px solid ${c.color}`,
                               padding: '2px 6px',
@@ -320,7 +391,13 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
                               fontSize: '11.5px'
                             }}
                           >
-                            {c.code}
+                            <ShinyText
+                              text={c.code}
+                              color={c.color}
+                              shineColor="#FFFFFF"
+                              speed={1.8}
+                              shineWidth={24}
+                            />
                           </span>
                           <span style={{ fontSize: '13px', fontWeight: 800, color: 'var(--text-dark)' }}>
                             {c.title}

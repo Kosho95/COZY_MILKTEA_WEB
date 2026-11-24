@@ -1,0 +1,29 @@
+@keyframes shinyTextAnimation {
+  0% {
+    background-position: 150% 0;
+  }
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+.shiny-text-root {
+  display: inline-block;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  vertical-align: middle;
+}
+
+.shiny-text-loop {
+  animation: shinyTextAnimation var(--shiny-speed, 2.5s) ease-in-out infinite;
+}
+
+.shiny-text-hover {
+  transition: filter 0.3s ease;
+}
+
+.shiny-text-hover:hover {
+  animation: shinyTextAnimation var(--shiny-speed, 2.5s) ease-in-out;
+}

@@ -87,6 +87,7 @@ export default function ProductCard({ product, categoryName, onSelectProduct }) 
 
   return (
     <motion.div
+      className="product-card-item"
       whileHover={{ y: -8 }}
       transition={{ type: 'spring', stiffness: 360, damping: 20 }}
       onMouseEnter={() => setIsHovered(true)}

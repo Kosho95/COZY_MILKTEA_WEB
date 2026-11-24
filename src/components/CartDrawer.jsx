@@ -42,6 +42,7 @@ export default function CartDrawer({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      data-lenis-prevent
       style={{
         position: 'fixed',
         top: 0,
@@ -52,7 +53,8 @@ export default function CartDrawer({
         backdropFilter: 'blur(6px)',
         zIndex: 90,
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        overscrollBehavior: 'contain'
       }}
       onClick={onClose}
     >
@@ -61,6 +63,7 @@ export default function CartDrawer({
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
         transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+        data-lenis-prevent
         onClick={(e) => e.stopPropagation()}
         style={{
           width: '100%',

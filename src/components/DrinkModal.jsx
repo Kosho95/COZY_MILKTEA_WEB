@@ -43,7 +43,7 @@ export default function DrinkModal({
     }
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = (e) => {
     onAddToCart({
       id: `${product.id}-${selectedSize}-${selectedSugar}-${selectedIce}-${selectedToppings.sort().join(',')}`,
       product_id: product.id,
@@ -57,7 +57,7 @@ export default function DrinkModal({
       quantity: quantity,
       unit_price: unitPrice,
       subtotal: subtotal
-    });
+    }, e);
     onClose();
   };
 
@@ -72,6 +72,7 @@ export default function DrinkModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      data-lenis-prevent
       style={{
         position: 'fixed',
         top: 0,
@@ -85,7 +86,8 @@ export default function DrinkModal({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '20px',
-        overflowY: 'auto'
+        overflowY: 'auto',
+        overscrollBehavior: 'contain'
       }}
       onClick={onClose}
     >
@@ -95,6 +97,7 @@ export default function DrinkModal({
         exit={{ opacity: 0, scale: 0.85, y: 25 }}
         transition={{ type: 'spring', stiffness: 380, damping: 25, mass: 0.85 }}
         className="drink-modal-box"
+        data-lenis-prevent
         onClick={(e) => e.stopPropagation()}
         style={{
           backgroundColor: 'var(--bg-surface)',
@@ -210,15 +213,26 @@ export default function DrinkModal({
         {/* CỘT PHẢI: Tùy biến Size, Đường, Đá & Topping */}
         <div
           className="drink-modal-right"
+          data-lenis-prevent
           style={{
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
-            overflowY: 'auto',
-            maxHeight: '90vh'
+            overflow: 'hidden',
+            maxHeight: '90vh',
+            minHeight: 0
           }}
         >
-          <div style={{ padding: '34px 28px 24px', flex: 1, overflowY: 'auto' }}>
+          <div
+            data-lenis-prevent
+            style={{
+              padding: '34px 28px 24px',
+              flex: 1,
+              overflowY: 'auto',
+              overscrollBehavior: 'contain',
+              minHeight: 0
+            }}
+          >
             {/* 1. CHỌN SIZE */}
             <div style={{ marginBottom: '22px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>

@@ -27,22 +27,28 @@ export default function PrintBillModal({ isOpen, onClose, orderData }) {
   const currentDate = new Date().toLocaleString('vi-VN');
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.65)',
-      backdropFilter: 'blur(6px)',
-      zIndex: 120,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
-      overflowY: 'auto'
-    }} onClick={onClose}>
+    <div
+      data-lenis-prevent
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+        backdropFilter: 'blur(6px)',
+        zIndex: 120,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        overflowY: 'auto',
+        overscrollBehavior: 'contain'
+      }}
+      onClick={onClose}
+    >
       <div
+        data-lenis-prevent
         className="animate-modal"
         onClick={(e) => e.stopPropagation()}
         style={{

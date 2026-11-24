@@ -242,6 +242,8 @@ export default function Navbar({
 
           {/* Cart Button with Spring Elasticity */}
           <motion.button
+            id="nav-cart-btn"
+            className="nav-cart-btn-target"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.92 }}
             transition={{ type: 'spring', stiffness: 450, damping: 18 }}
@@ -386,9 +388,10 @@ export default function Navbar({
 
           {/* Nút Giỏ hàng trên điện thoại */}
           <motion.button
+            id="nav-cart-btn-mobile"
             whileTap={{ scale: 0.9 }}
             onClick={onOpenCart}
-            className="navbar-mobile-cart-btn"
+            className="navbar-mobile-cart-btn nav-cart-btn-target"
             style={{
               height: '36px',
               padding: '0 12px',
@@ -467,6 +470,23 @@ export default function Navbar({
           )}
         </div>
       </div>
+
+      {/* THANH TIẾN TRÌNH CUỘN TRANG (GSAP / LENIS SCROLL PROGRESS BAR) */}
+      <div
+        id="scroll-progress-bar"
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          height: '3px',
+          width: '0%',
+          background: 'linear-gradient(90deg, #FF8FA3 0%, #F4A261 50%, #FFD166 100%)',
+          boxShadow: '0 0 10px rgba(255, 143, 163, 0.7)',
+          zIndex: 50,
+          pointerEvents: 'none',
+          transition: 'width 0.08s linear'
+        }}
+      />
     </header>
   );
 }
