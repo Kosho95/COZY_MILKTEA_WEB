@@ -1,15 +1,13 @@
 import gsap from 'gsap';
-import confetti from 'canvas-confetti';
 
 /**
- * Hiệu ứng GSAP: Hạt trân châu / Ly trà sữa bay theo hình vòng cung Parabol vào Giỏ hàng
+ * Hiệu ứng GSAP: Chấm tròn món đồ uống bay mượt mà theo hình vòng cung Parabol vào Giỏ hàng
  * @param {MouseEvent|HTMLElement|{x: number, y: number}} start - Vị trí bấm hoặc phần tử bắt đầu
  * @param {Object} options - Tùy chọn icon, màu sắc, callback
  */
 export function flyBobaToCart(start, options = {}) {
   const {
-    icon = '🧋',
-    duration = 0.85,
+    duration = 0.75,
     onComplete = null
   } = options;
 
@@ -44,7 +42,7 @@ export function flyBobaToCart(start, options = {}) {
   const endX = cartRect.left + cartRect.width / 2;
   const endY = cartRect.top + cartRect.height / 2;
 
-  // 4. Tạo phần tử DOM bay
+  // 4. Tạo phần tử DOM bay - thiết kế viên ngọc trà sữa ấm tối giản
   const flyer = document.createElement('div');
   flyer.className = 'flying-boba-node';
   flyer.style.position = 'fixed';
@@ -55,17 +53,19 @@ export function flyBobaToCart(start, options = {}) {
   flyer.style.transform = `translate(${startX}px, ${startY}px)`;
   flyer.innerHTML = `
     <div style="
-      font-size: 26px;
-      line-height: 1;
-      filter: drop-shadow(0 6px 14px rgba(93, 64, 55, 0.45));
-      display: inline-block;
-    ">${icon}</div>
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #F4A261 0%, #C27848 60%, #3E2723 100%);
+      box-shadow: 0 4px 12px rgba(62, 39, 35, 0.45);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+    "></div>
   `;
 
   document.body.appendChild(flyer);
 
-  // 5. Tính đỉnh vòng cung parabol (uốn lượn mềm mại lên trên)
-  const arcHeight = Math.max(80, Math.abs(startY - endY) * 0.4 + 40);
+  // 5. Đỉnh vòng cung parabol
+  const arcHeight = Math.max(70, Math.abs(startY - endY) * 0.35 + 30);
   const midY = Math.min(startY, endY) - arcHeight;
 
   // 6. GSAP Timeline bay parabol
@@ -75,13 +75,13 @@ export function flyBobaToCart(start, options = {}) {
         flyer.parentNode.removeChild(flyer);
       }
 
-      // Nảy giỏ hàng đàn hồi (Elastic Pop)
+      // Giỏ hàng nảy nhẹ đàn hồi tinh tế
       gsap.fromTo(cartBtn,
-        { scale: 0.8 },
+        { scale: 0.9 },
         {
-          scale: 1.25,
-          duration: 0.22,
-          ease: 'back.out(3.5)',
+          scale: 1.15,
+          duration: 0.18,
+          ease: 'power2.out',
           yoyo: true,
           repeat: 1,
           onComplete: () => {
@@ -90,63 +90,35 @@ export function flyBobaToCart(start, options = {}) {
         }
       );
 
-      // Pháo hoa li ti kẹo ngọt bùng nổ nhẹ tại icon giỏ hàng
-      try {
-        const normX = endX / window.innerWidth;
-        const normY = endY / window.innerHeight;
-        confetti({
-          particleCount: 16,
-          spread: 45,
-          startVelocity: 16,
-          ticks: 50,
-          origin: { x: normX, y: normY },
-          colors: ['#FF8FA3', '#F4A261', '#FFD166', '#52B788', '#FFFFFF'],
-          disableForReducedMotion: true
-        });
-      } catch {}
-
       if (onComplete) onComplete();
     }
   });
 
-  // Di chuyển trục X
+  // Tọa độ X chạy đều mượt mà
   tl.to(flyer, {
-    x: endX - 13,
+    x: endX,
     duration: duration,
     ease: 'power1.inOut'
   }, 0);
 
-  // Bay vồng lên đỉnh parabol
+  // Tọa độ Y uốn lượn parabol
   tl.to(flyer, {
     y: midY,
     duration: duration * 0.45,
     ease: 'power1.out'
   }, 0);
 
-  // Lao xuống giỏ hàng
   tl.to(flyer, {
-    y: endY - 13,
+    y: endY,
     duration: duration * 0.55,
     ease: 'power2.in'
   }, duration * 0.45);
 
-  // Xoay 360 độ và thu nhỏ dần khi tiếp đất
+  // Thu nhỏ dần khi sắp chạm giỏ hàng
   tl.to(flyer, {
-    rotation: 360,
-    duration: duration,
-    ease: 'power1.out'
-  }, 0);
-
-  tl.fromTo(flyer, 
-    { scale: 0.7 },
-    { scale: 1.3, duration: duration * 0.35, ease: 'back.out(2)' },
-    0
-  );
-
-  tl.to(flyer, {
-    scale: 0.4,
+    scale: 0.6,
     opacity: 0.85,
-    duration: duration * 0.4,
-    ease: 'power1.in'
-  }, duration * 0.6);
+    duration: duration * 0.3,
+    ease: 'power2.in'
+  }, duration * 0.7);
 }

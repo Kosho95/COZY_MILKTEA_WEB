@@ -1,202 +1,103 @@
 import React from 'react';
-import { Tag, Sparkles, Zap, ShieldCheck, Heart } from 'lucide-react';
+import { Tag, Sparkles, Zap, ShieldCheck, Clock, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
-import CreamDrip from './CreamDrip';
-import ShinyText from './ShinyText';
 import TiltedCard, { TiltedCardLayer } from './TiltedCard';
 
 export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
   const coupons = [
-    { code: 'GIAM15K', title: 'Giảm 15.000đ', desc: 'Đơn từ 60.000đ', badge: 'HOT', color: '#E07A5F' },
-    { code: 'FREESHIP', title: 'Freeship 100%', desc: 'Đơn từ 50.000đ', badge: 'TIỆN LỢI', color: '#2D6A4F' },
-    { code: 'BANMOI', title: 'Giảm 20% Đơn', desc: 'Mừng bạn mới', badge: 'ƯU ĐÃI', color: '#B06C3B' }
+    { code: 'GIAM15K', title: 'Giảm 15.000đ', desc: 'Đơn từ 60.000đ', color: '#C27848' },
+    { code: 'FREESHIP', title: 'Freeship đơn 50K', desc: 'Tối đa 25.000đ', color: '#2D6A4F' },
+    { code: 'BANMOI', title: 'Giảm 20% đơn đầu', desc: 'Dành cho khách mới', color: '#B06C3B' }
   ];
 
-  // Bắn pháo hoa mini ngọt ngào khi bấm áp mã
-  const handleApplyCoupon = (code, e) => {
+  const handleApplyCoupon = (code) => {
     if (onApplyCoupon) onApplyCoupon(code);
-    try {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = (rect.left + rect.width / 2) / window.innerWidth;
-      const y = (rect.top + rect.height / 2) / window.innerHeight;
-      confetti({
-        particleCount: 35,
-        spread: 65,
-        origin: { x, y },
-        colors: ['#E07A5F', '#52B788', '#F4A261', '#FFFFFF', '#6F4E37'],
-        disableForReducedMotion: true
-      });
-    } catch (err) {}
   };
 
   return (
-    <div style={{ marginTop: '16px', marginBottom: '28px', position: 'relative', width: '100%', overflow: 'hidden' }}>
+    <div style={{ marginTop: '16px', marginBottom: '28px', position: 'relative', width: '100%' }}>
       <div className="container" style={{ padding: '0 14px' }}>
         {/* Main Hero Card */}
         <div
           className="hero-card"
           style={{
-            background: 'linear-gradient(135deg, #3E2723 0%, #2E1B16 45%, #1C0F0B 100%)',
-            borderRadius: '24px',
-            padding: '44px 36px 36px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 20px 50px -10px rgba(46, 27, 22, 0.45)',
+            backgroundColor: '#261713',
+            borderRadius: '20px',
+            padding: '38px 34px',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 16px 36px -8px rgba(38, 23, 19, 0.35)',
             display: 'flex',
             flexWrap: 'wrap',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '28px',
+            gap: '32px',
             position: 'relative',
             overflow: 'hidden',
             width: '100%',
-            boxBox: 'border-box'
+            boxSizing: 'border-box'
           }}
         >
-          {/* LỚP KEM TUYẾT TRẮNG TINH KHÔI NỔI BẬT */}
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 4, width: '100%' }}>
-            <CreamDrip height={32} theme="white" />
-          </div>
-
-          {/* CÁC HẠT TRÂN CHÂU ĐA SẮC ĐÀN HỒI (ẨN TRÊN MOBILE ĐỂ TRÁNH TRÀN TRANG) */}
-          <div
-            className="boba-pearl hero-boba-decor"
-            title="Trân châu đường đen (Bấm để nảy!)"
-            style={{
-              position: 'absolute',
-              right: '340px',
-              top: '55px',
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle at 32% 32%, #795548 0%, #3E2723 60%, #1A0C08 100%)',
-              boxShadow: 'inset -2px -2px 6px rgba(0,0,0,0.6), 0 8px 18px rgba(0,0,0,0.5)',
-              animation: 'bobaFloatSine 5.2s ease-in-out infinite',
-              zIndex: 3
-            }}
-          >
-            <div style={{
-              position: 'absolute',
-              top: '7px',
-              left: '10px',
-              width: '11px',
-              height: '6px',
-              borderRadius: '50%',
-              background: 'rgba(255, 255, 255, 0.85)',
-              transform: 'rotate(-30deg)'
-            }} />
-          </div>
-
-          <div
-            className="boba-pearl hero-boba-decor"
-            title="Trân châu hoàng kim"
-            style={{
-              position: 'absolute',
-              right: '420px',
-              bottom: '35px',
-              width: '30px',
-              height: '30px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle at 35% 35%, #F4A261 0%, #C27848 65%, #7F4217 100%)',
-              boxShadow: 'inset -2px -2px 5px rgba(0,0,0,0.5), 0 6px 14px rgba(0,0,0,0.4)',
-              animation: 'bobaFloatSine 4.5s ease-in-out infinite',
-              animationDelay: '1.2s',
-              zIndex: 3
-            }}
-          >
-            <div style={{
-              position: 'absolute',
-              top: '5px',
-              left: '8px',
-              width: '8px',
-              height: '5px',
-              borderRadius: '50%',
-              background: 'rgba(255, 255, 255, 0.9)',
-              transform: 'rotate(-35deg)'
-            }} />
-          </div>
-
-          {/* Vầng sáng hồng hào ấm cúng góc nền */}
+          {/* Subtle warm ambient glow behind product */}
           <div
             style={{
               position: 'absolute',
-              right: '-60px',
-              bottom: '-60px',
+              right: '280px',
+              top: '50%',
+              transform: 'translateY(-50%)',
               width: '320px',
               height: '320px',
               borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(244, 162, 97, 0.16) 0%, rgba(224, 122, 95, 0.06) 60%, transparent 100%)',
+              background: 'radial-gradient(circle, rgba(194, 120, 72, 0.12) 0%, transparent 70%)',
               pointerEvents: 'none'
             }}
           />
 
           {/* KHỐI NỘI DUNG BÊN TRÁI */}
-          <div className="hero-left-col" style={{ flex: '1 1 320px', minWidth: 0, maxWidth: '100%', zIndex: 5 }}>
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
+          <div className="hero-left-col" style={{ flex: '1 1 340px', minWidth: 0, maxWidth: '100%', zIndex: 2 }}>
+            <div
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '6px 14px',
-                backgroundColor: 'rgba(255, 255, 255, 0.12)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: 'var(--radius-full)',
-                color: '#FFE8D6',
-                fontSize: '12.5px',
-                fontWeight: 800,
-                boxShadow: '0 4px 14px rgba(0,0,0,0.2)',
+                padding: '5px 12px',
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                borderRadius: '8px',
+                color: '#E6DDD8',
+                fontSize: '12px',
+                fontWeight: 500,
                 marginBottom: '14px',
-                border: '1px solid rgba(255, 255, 255, 0.2)'
+                border: '1px solid rgba(255, 255, 255, 0.12)'
               }}
             >
-              <Sparkles size={14} color="#F4A261" />
-              <ShinyText
-                text="Hương Vị Trà Lá Tự Nhiên & Kem Sữa Tươi"
-                color="#FFE8D6"
-                shineColor="#FFFFFF"
-                speed={2.2}
-                shineWidth={45}
-              />
-            </motion.div>
+              <Sparkles size={13} color="#F4A261" />
+              <span>Trà lá nguyên bản & kem tươi thủ công mỗi ngày</span>
+            </div>
 
             <h1
               className="hero-title"
               style={{
-                fontSize: '34px',
-                fontWeight: 900,
-                color: '#FFFFFF',
-                lineHeight: 1.25,
+                fontSize: '32px',
+                fontWeight: 600,
+                color: '#FFF8F0',
+                lineHeight: 1.3,
                 marginBottom: '12px',
-                textShadow: '0 2px 10px rgba(0,0,0,0.3)'
+                letterSpacing: '-0.02em'
               }}
             >
-              Thưởng thức vị trà ngọt ngào, <br />
-              <ShinyText
-                text="lớp kem sánh mịn & trân châu dẻo bùi 🧋"
-                color="#F4A261"
-                shineColor="#FFF3E0"
-                speed={2.6}
-                shineWidth={60}
-                style={{
-                  fontStyle: 'italic',
-                  fontWeight: 900
-                }}
-              />
+              Thưởng thức vị trà nguyên bản, <br />
+              <span style={{ color: '#F4A261' }}>lớp kem sánh mịn</span> và trân châu dẻo bùi.
             </h1>
 
             <p
               style={{
-                fontSize: '14.5px',
-                color: '#D7CCC8',
-                maxWidth: '520px',
+                fontSize: '14px',
+                color: '#C7B9B4',
+                maxWidth: '480px',
                 lineHeight: 1.6,
-                marginBottom: '22px'
+                marginBottom: '24px'
               }}
             >
-              Chọn mức đường, lượng đá và phủ đầy topping yêu thích. Đồ uống được pha chế thủ công ngay khi bạn đặt hàng!
+              Pha chế thủ công theo từng đơn đặt hàng. Tự do điều chỉnh mức đường, lượng đá và phủ đầy topping ưa thích.
             </p>
 
             {/* QUICK FEATURE CHIPS */}
@@ -205,20 +106,17 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '12.5px',
-                  color: '#FFFFFF',
-                  fontWeight: 700,
-                  backgroundColor: 'rgba(45, 106, 79, 0.45)',
-                  border: '1px solid rgba(82, 183, 136, 0.4)',
+                  gap: '7px',
+                  fontSize: '12px',
+                  color: '#E6DDD8',
+                  fontWeight: 500,
+                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
                   padding: '6px 12px',
-                  borderRadius: '16px',
-                  backdropFilter: 'blur(6px)'
+                  borderRadius: '8px'
                 }}
               >
-                <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: '#52B788', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Zap size={12} color="#fff" />
-                </div>
+                <Zap size={13} color="#52B788" />
                 <span>Giao nhanh 20 phút</span>
               </div>
 
@@ -226,101 +124,91 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '12.5px',
-                  color: '#FFFFFF',
-                  fontWeight: 700,
-                  backgroundColor: 'rgba(224, 122, 95, 0.35)',
-                  border: '1px solid rgba(244, 162, 97, 0.4)',
+                  gap: '7px',
+                  fontSize: '12px',
+                  color: '#E6DDD8',
+                  fontWeight: 500,
+                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
                   padding: '6px 12px',
-                  borderRadius: '16px',
-                  backdropFilter: 'blur(6px)'
+                  borderRadius: '8px'
                 }}
               >
-                <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: '#F4A261', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <ShieldCheck size={12} color="#fff" />
-                </div>
-                <span>Trà lá tự nhiên 100%</span>
+                <ShieldCheck size={13} color="#F4A261" />
+                <span>100% lá trà mộc tự nhiên</span>
               </div>
 
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '12.5px',
-                  color: '#FFFFFF',
-                  fontWeight: 700,
-                  backgroundColor: 'rgba(194, 120, 72, 0.35)',
-                  border: '1px solid rgba(212, 163, 115, 0.4)',
+                  gap: '7px',
+                  fontSize: '12px',
+                  color: '#E6DDD8',
+                  fontWeight: 500,
+                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
                   padding: '6px 12px',
-                  borderRadius: '16px',
-                  backdropFilter: 'blur(6px)'
+                  borderRadius: '8px'
                 }}
               >
-                <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: '#E76F51', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Heart size={12} color="#fff" />
-                </div>
-                <span>Kem Cheese trắng tươi mỗi ngày</span>
+                <Clock size={13} color="#E76F51" />
+                <span>Kem cheese đánh mới trong ngày</span>
               </div>
             </div>
           </div>
 
-          {/* KHỐI 3D TILTED CARD - SPOTLIGHT MÓN NÀNG YÊU THÍCH */}
+          {/* KHỐI 3D TILTED CARD - SIGNATURE DRINK */}
           <div className="hero-tilted-spotlight" style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 5
+            zIndex: 2
           }}>
             <TiltedCard
               imageSrc="https://images.unsplash.com/photo-1558857563-b37cf5b62b1a?w=600&q=80&auto=format&fit=crop"
               altText="Trà Sữa Nướng Trân Châu Hoàng Kim"
-              captionText="Trà Sữa Nướng Hoàng Kim ✨"
-              containerHeight="210px"
-              containerWidth="190px"
-              imageHeight="210px"
-              imageWidth="190px"
-              rotateAmplitude={14}
-              scaleOnHover={1.08}
-              glare={0.65}
-              shadow={0.5}
+              captionText="Trà Sữa Nướng Hoàng Kim"
+              containerHeight="220px"
+              containerWidth="195px"
+              imageHeight="220px"
+              imageWidth="195px"
+              rotateAmplitude={12}
+              scaleOnHover={1.05}
+              glare={0.4}
+              shadow={0.3}
             >
-              <TiltedCardLayer depth={32}>
+              <TiltedCardLayer depth={28}>
                 <div style={{
                   position: 'absolute',
                   top: '12px',
                   left: '12px',
-                  backgroundColor: 'rgba(255, 112, 67, 0.94)',
-                  color: '#fff',
+                  backgroundColor: 'rgba(38, 23, 19, 0.85)',
+                  color: '#F4A261',
                   padding: '4px 10px',
-                  borderRadius: '20px',
+                  borderRadius: '6px',
                   fontSize: '11px',
-                  fontWeight: 800,
-                  backdropFilter: 'blur(4px)',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px'
+                  fontWeight: 600,
+                  border: '1px solid rgba(244, 162, 97, 0.3)',
+                  backdropFilter: 'blur(6px)'
                 }}>
-                  <span>👑</span>
-                  <span>Nàng Yêu Thích</span>
+                  Món đặc trưng
                 </div>
               </TiltedCardLayer>
-              <TiltedCardLayer depth={22}>
+              <TiltedCardLayer depth={18}>
                 <div style={{
                   position: 'absolute',
-                  bottom: '46px',
+                  bottom: '44px',
                   right: '12px',
-                  backgroundColor: 'rgba(30, 16, 12, 0.8)',
-                  color: '#FFE8D6',
+                  backgroundColor: 'rgba(38, 23, 19, 0.85)',
+                  color: '#FFF8F0',
                   padding: '3px 8px',
-                  borderRadius: '10px',
+                  borderRadius: '6px',
                   fontSize: '11.5px',
-                  fontWeight: 800,
+                  fontWeight: 600,
                   backdropFilter: 'blur(4px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                  border: '1px solid rgba(255, 255, 255, 0.15)'
                 }}>
                   32.000đ
                 </div>
@@ -329,14 +217,14 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
           </div>
 
           {/* KHỐI MÃ GIẢM GIÁ BÊN PHẢI */}
-          <div className="hero-right-col" style={{ flex: '1 1 280px', minWidth: 0, maxWidth: '100%', zIndex: 5 }}>
+          <div className="hero-right-col" style={{ flex: '1 1 290px', minWidth: 0, maxWidth: '100%', zIndex: 2 }}>
             <div
               style={{
                 backgroundColor: 'var(--bg-surface)',
-                borderRadius: '20px',
-                padding: '18px',
-                boxShadow: 'var(--shadow-lg)',
-                border: '1.5px solid var(--border-soft)'
+                borderRadius: '16px',
+                padding: '20px',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
+                border: '1px solid var(--border-soft)'
               }}
             >
               <div
@@ -344,86 +232,86 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  fontSize: '14px',
-                  fontWeight: 800,
+                  fontSize: '13.5px',
+                  fontWeight: 600,
                   color: 'var(--text-dark)',
-                  marginBottom: '12px'
+                  marginBottom: '14px'
                 }}
               >
-                <Tag size={16} color="#E07A5F" />
-                <span>Mã giảm giá hôm nay dành cho bạn:</span>
+                <Tag size={15} color="#C27848" />
+                <span>Mã ưu đãi hôm nay</span>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '9px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {coupons.map((c) => {
                   const isApplied = activeCoupon === c.code;
                   return (
-                    <motion.div
+                    <div
                       key={c.code}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.96 }}
-                      transition={{ type: 'spring', stiffness: 450, damping: 20 }}
-                      onClick={(e) => handleApplyCoupon(c.code, e)}
+                      onClick={() => handleApplyCoupon(c.code)}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '10px 12px',
                         backgroundColor: isApplied ? 'var(--accent-orange-light)' : 'var(--bg-surface-soft)',
-                        borderRadius: '12px',
-                        border: `1.5px solid ${isApplied ? c.color : 'var(--border-soft)'}`,
+                        borderRadius: '10px',
+                        border: `1px solid ${isApplied ? c.color : 'var(--border-soft)'}`,
                         cursor: 'pointer',
-                        boxShadow: isApplied
-                          ? '0 6px 16px rgba(224, 122, 95, 0.2)'
-                          : '0 2px 6px rgba(0,0,0,0.03)'
+                        transition: 'all 0.2s ease'
                       }}
                     >
                       <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span
                             style={{
                               fontFamily: 'monospace',
-                              fontWeight: 900,
+                              fontWeight: 700,
                               backgroundColor: 'var(--bg-surface)',
-                              border: `1px solid ${c.color}`,
+                              border: `1px solid ${isApplied ? c.color : 'var(--border-soft)'}`,
+                              color: isApplied ? c.color : 'var(--text-dark)',
                               padding: '2px 6px',
-                              borderRadius: '5px',
-                              fontSize: '11.5px'
+                              borderRadius: '4px',
+                              fontSize: '11px'
                             }}
                           >
-                            <ShinyText
-                              text={c.code}
-                              color={c.color}
-                              shineColor="#FFFFFF"
-                              speed={1.8}
-                              shineWidth={24}
-                            />
+                            {c.code}
                           </span>
-                          <span style={{ fontSize: '13px', fontWeight: 800, color: 'var(--text-dark)' }}>
+                          <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-dark)' }}>
                             {c.title}
                           </span>
                         </div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                        <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', marginTop: '3px' }}>
                           {c.desc}
                         </div>
                       </div>
 
                       <button
+                        type="button"
                         style={{
                           fontSize: '11.5px',
-                          fontWeight: 800,
+                          fontWeight: 600,
                           padding: '5px 12px',
-                          borderRadius: 'var(--radius-full)',
+                          borderRadius: '6px',
                           backgroundColor: isApplied ? c.color : '#3E2723',
                           color: '#fff',
                           border: 'none',
                           cursor: 'pointer',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px'
                         }}
                       >
-                        {isApplied ? 'Đang dùng' : 'Áp dụng'}
+                        {isApplied ? (
+                          <>
+                            <Check size={12} strokeWidth={2.5} />
+                            <span>Đã dùng</span>
+                          </>
+                        ) : (
+                          'Áp dụng'
+                        )}
                       </button>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>

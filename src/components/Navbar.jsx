@@ -55,7 +55,7 @@ export default function Navbar({
             boxShadow: '0 4px 14px rgba(93, 64, 55, 0.25)',
             flexShrink: 0
           }}>
-            🧋
+            <Coffee size={22} color="#fff" />
           </div>
           <div>
             <div className="brand-title-text" style={{
@@ -168,7 +168,7 @@ export default function Navbar({
                   justifyContent: 'center',
                   fontSize: '13px'
                 }}>
-                  🧋
+                  <Coffee size={22} color="#fff" />
                 </div>
                 <span style={{ maxWidth: '110px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {currentUser.name}

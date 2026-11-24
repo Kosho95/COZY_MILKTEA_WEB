@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, ArrowRight, Tag, ShoppingBag, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatVND } from '../api';
-import CreamDrip from './CreamDrip';
 import FluidButton from '@/components/lightswind/fluid-button';
 
 export default function CartDrawer({
@@ -76,11 +75,6 @@ export default function CartDrawer({
           position: 'relative'
         }}
       >
-        {/* LỚP KEM CHEESE CHẢY TRÊN ĐỈNH DRAWER */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 12 }}>
-          <CreamDrip height={18} />
-        </div>
-
         {/* Header Drawer */}
         <div style={{
           padding: '24px 24px 18px',

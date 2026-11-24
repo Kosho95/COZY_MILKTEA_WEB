@@ -12,14 +12,12 @@ import PrintBillModal from './components/PrintBillModal';
 import LoginModal from './components/LoginModal';
 import AdminDashboard from './components/AdminDashboard';
 import Toast from './components/Toast';
-import CreamDrip from './components/CreamDrip';
 import { fetchMenuData, getApiBaseUrl, setApiBaseUrl, formatVND } from './api';
-import { Sparkles, CupSoda, Heart, Coffee, ShieldCheck, MapPin, Phone, Clock, Settings, RefreshCw } from 'lucide-react';
+import { Sparkles, CupSoda, Heart, Coffee, ShieldCheck, MapPin, Phone, Clock, Settings, RefreshCw, ArrowUp } from 'lucide-react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { flyBobaToCart } from './utils/cartAnimation';
-import ClickSpark from './components/ClickSpark';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -174,23 +172,10 @@ export default function App() {
   // Hiệu ứng GSAP ScrollTrigger: Parallax cho Hero Banner & Reveal chân trang
   useEffect(() => {
     const heroCtx = gsap.context(() => {
-      // 1. Trân châu trang trí lơ lửng ngược chiều cuộn tạo chiều sâu 3D
-      gsap.to('.hero-boba-decor', {
-        yPercent: -75,
-        rotation: 45,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero-card',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.2
-        }
-      });
-
-      // 2. Thẻ 3D spotlight nghiêng nhẹ và trôi chậm khi lướt chuột
+      // 1. Thẻ 3D spotlight nghiêng nhẹ và trôi chậm khi lướt chuột
       gsap.to('.hero-tilted-spotlight', {
-        yPercent: -18,
-        rotateZ: 4,
+        yPercent: -14,
+        rotateZ: 2,
         ease: 'none',
         scrollTrigger: {
           trigger: '.hero-card',
@@ -412,15 +397,7 @@ export default function App() {
 
   // GIAO DIỆN BÁN HÀNG DÀNH CHO KHÁCH
   return (
-    <ClickSpark
-      sparkColor={['#FF8FA3', '#F4A261', '#FFD166', '#52B788', '#FFFFFF']}
-      shape="line"
-      sparkCount={9}
-      sparkSize={15}
-      sparkRadius={35}
-      duration={480}
-    >
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         {/* 1. THANH ĐIỀU HƯỚNG CỐ ĐỊNH (STICKY NAVBAR) */}
         <Navbar
           cartCount={cartCount}
@@ -643,11 +620,6 @@ export default function App() {
 
         {/* 11. TOAST NOTIFICATION TRƯỢT NHẸ */}
         <Toast toast={toast} onClose={() => setToast(null)} />
-
-        {/* LỚP KEM TUYẾT TRẮNG TINH KHÔI CHẢY TRÀN TRÊN ĐỈNH CHÂN TRANG */}
-        <div style={{ marginTop: '60px', transform: 'translateY(2px)', lineHeight: 0, position: 'relative', zIndex: 10 }}>
-          <CreamDrip height={42} theme="white" />
-        </div>
 
         {/* 12. FOOTER NÂU CÀ PHÊ & CACAO SANG TRỌNG ĐẬM ĐÀ */}
         <footer style={{
@@ -897,38 +869,36 @@ export default function App() {
           {showBackToTop && (
             <motion.button
               key="back-to-top"
-              initial={{ opacity: 0, scale: 0.5, y: 20 }}
+              initial={{ opacity: 0, scale: 0.8, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.5, y: 20 }}
-              whileHover={{ scale: 1.15, y: -4 }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+              exit={{ opacity: 0, scale: 0.8, y: 15 }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ duration: 0.2 }}
               onClick={() => lenisRef.current?.scrollTo(0, { duration: 1.2 })}
               title="Cuộn lên đầu trang"
               style={{
                 position: 'fixed',
-                bottom: '30px',
+                bottom: '28px',
                 right: '28px',
                 zIndex: 85,
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                backgroundColor: 'var(--primary-600)',
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                backgroundColor: 'var(--primary-600, #3E2723)',
                 color: '#fff',
-                border: '2px solid rgba(255, 255, 255, 0.4)',
-                boxShadow: '0 8px 24px rgba(93, 64, 55, 0.35)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                boxShadow: '0 8px 24px rgba(62, 39, 35, 0.3)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                cursor: 'pointer',
-                fontSize: '22px'
+                cursor: 'pointer'
               }}
             >
-              🧋
+              <ArrowUp size={19} strokeWidth={2.2} />
             </motion.button>
           )}
         </AnimatePresence>
       </div>
-    </ClickSpark>
   );
 }
