@@ -13,7 +13,7 @@ import LoginModal from './components/LoginModal';
 import AdminDashboard from './components/AdminDashboard';
 import Toast from './components/Toast';
 import { fetchMenuData, getApiBaseUrl, setApiBaseUrl, formatVND } from './api';
-import { Sparkles, CupSoda, Heart, Coffee, ShieldCheck, MapPin, Phone, Clock, Settings, RefreshCw, ArrowUp } from 'lucide-react';
+import { Sparkles, CupSoda, Heart, Coffee, ShieldCheck, MapPin, Phone, Clock, Settings, RefreshCw, ArrowUp, Shuffle } from 'lucide-react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -59,6 +59,7 @@ export default function App() {
 
   // Bộ lọc & Tìm kiếm
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [selectedMood, setSelectedMood] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Giỏ hàng & Voucher
@@ -357,14 +358,43 @@ export default function App() {
     setToast({ message: `Đã chọn mã ưu đãi: ${code} 🏷️` });
   };
 
-  // Lọc sản phẩm theo danh mục và tìm kiếm tức thì
+  const MOOD_FILTERS = [
+    { id: 'all', label: 'Tất cả' },
+    { id: 'tinh-tao', label: 'Cần tỉnh táo' },
+    { id: 'thanh-mat', label: 'Giải nhiệt' },
+    { id: 'beo-ngay', label: 'Thèm béo ngậy' },
+    { id: 'ngot-ngao', label: 'Dịu ngọt' }
+  ];
+
+  const matchesMood = (p, moodId) => {
+    if (!moodId || moodId === 'all') return true;
+    const name = (p.name || '').toLowerCase();
+    const catId = Number(p.category_id);
+    if (moodId === 'tinh-tao') return catId === 2 || name.includes('oolong') || name.includes('americano') || name.includes('cà phê');
+    if (moodId === 'thanh-mat') return catId === 3 || name.includes('đào') || name.includes('vải') || name.includes('thái') || name.includes('mãng cầu');
+    if (moodId === 'beo-ngay') return catId === 1 || catId === 4 || name.includes('trứng') || name.includes('muối') || name.includes('đường đen');
+    if (moodId === 'ngot-ngao') return catId === 5 || name.includes('khoai môn') || name.includes('bạc xỉu') || name.includes('matcha') || name.includes('sữa tươi');
+    return true;
+  };
+
+  // Lọc sản phẩm theo danh mục, tâm trạng và tìm kiếm tức thì
   const filteredProducts = products.filter(p => {
     const matchCategory = selectedCategoryId === null || Number(p.category_id) === Number(selectedCategoryId);
+    const matchMood = matchesMood(p, selectedMood);
     const matchSearch = !searchQuery.trim() ||
       p.name.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
       (p.description && p.description.toLowerCase().includes(searchQuery.trim().toLowerCase()));
-    return matchCategory && matchSearch;
+    return matchCategory && matchMood && matchSearch;
   });
+
+  // Chọn món ngẫu nhiên cho người chưa biết uống gì
+  const handleRandomDrink = () => {
+    const pool = filteredProducts.length > 0 ? filteredProducts : products;
+    if (!pool.length) return;
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    setSelectedProduct(picked);
+    setToast({ message: `Hôm nay thử "${picked.name}" nhé!` });
+  };
 
   // Tính tổng số lượng ly trong giỏ
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -456,6 +486,71 @@ export default function App() {
                 Kết quả tìm kiếm cho: "<strong style={{ color: 'var(--primary-700)' }}>{searchQuery}</strong>"
               </div>
             )}
+          </div>
+
+          {/* Thanh Gợi ý theo tâm trạng & Random món */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '12px',
+            padding: '12px 16px',
+            marginBottom: '22px',
+            borderRadius: '14px',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border-light)'
+          }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--text-muted)', marginRight: '4px' }}>
+                Hôm nay uống gì?
+              </span>
+              {MOOD_FILTERS.map((m) => {
+                const active = selectedMood === m.id;
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setSelectedMood(m.id)}
+                    style={{
+                      padding: '6px 13px',
+                      borderRadius: '999px',
+                      border: `1px solid ${active ? 'var(--primary-600)' : 'var(--border-soft)'}`,
+                      backgroundColor: active ? 'var(--primary-600)' : 'var(--bg-surface-soft)',
+                      color: active ? '#fff' : 'var(--text-body)',
+                      fontSize: '12.5px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    {m.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleRandomDrink}
+              disabled={!products.length}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '7px',
+                padding: '8px 15px',
+                borderRadius: '999px',
+                border: 'none',
+                backgroundColor: 'var(--text-dark)',
+                color: '#fff',
+                fontSize: '12.5px',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              <Shuffle size={14} />
+              <span>Chọn ngẫu nhiên</span>
+            </button>
           </div>
 
           {/* TRƯỜNG HỢP: SKELETON LOADING KHI ĐANG TẢI DỮ LIỆU */}

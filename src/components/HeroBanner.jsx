@@ -2,6 +2,7 @@ import React from 'react';
 import { Tag, Sparkles, Zap, ShieldCheck, Clock, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import TiltedCard, { TiltedCardLayer } from './TiltedCard';
+import { DRINK_PHOTOS } from '../drinkImages';
 
 export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
   const coupons = [
@@ -167,7 +168,7 @@ export default function HeroBanner({ onApplyCoupon, activeCoupon }) {
             zIndex: 2
           }}>
             <TiltedCard
-              imageSrc="https://images.unsplash.com/photo-1558857563-b37cf5b62b1a?w=600&q=80&auto=format&fit=crop"
+              imageSrc={DRINK_PHOTOS.oolong_roasted}
               altText="Trà Sữa Nướng Trân Châu Hoàng Kim"
               captionText="Trà Sữa Nướng Hoàng Kim"
               containerHeight="220px"

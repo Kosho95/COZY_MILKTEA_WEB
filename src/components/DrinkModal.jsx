@@ -3,6 +3,7 @@ import { X, Plus, Minus, Check, ShoppingBag } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { formatVND } from '../api';
 import FluidButton from '@/components/lightswind/fluid-button';
+import CupVisualizer from './CupVisualizer';
 
 export default function DrinkModal({
   product,
@@ -64,6 +65,7 @@ export default function DrinkModal({
   const iceLevels = ['Không đá', '30% đá', '50% đá', '100% đá'];
 
   const [imgErr, setImgErr] = useState(false);
+  const [previewMode, setPreviewMode] = useState('cup'); // 'cup' | 'photo'
   const fallbackImg = "https://images.unsplash.com/photo-1558857563-b37cf5b62b1a?w=500";
 
   return (
@@ -135,39 +137,94 @@ export default function DrinkModal({
           <X size={16} />
         </button>
 
-        {/* CỘT TRÁI: Ảnh ly & Giới thiệu hương vị */}
+        {/* CỘT TRÁI: Mô hình ly tương tác & Ảnh sản phẩm */}
         <div
           className="drink-modal-left"
           style={{
             backgroundColor: 'var(--bg-surface-soft)',
-            padding: '32px 24px 24px',
+            padding: '24px 22px 22px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             borderRight: '1px solid var(--border-light)',
-            position: 'relative'
+            position: 'relative',
+            minWidth: '255px'
           }}
         >
-          <div
-            className="drink-img-box"
-            style={{
-              width: '190px',
-              height: '190px',
-              borderRadius: '12px',
-              overflow: 'hidden',
-              boxShadow: '0 6px 18px rgba(0, 0, 0, 0.08)',
-              marginBottom: '16px',
-              border: '1px solid var(--border-soft)'
-            }}
-          >
-            <img
-              src={imgErr ? fallbackImg : (product.image_url || fallbackImg)}
-              alt={product.name}
-              onError={() => setImgErr(true)}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
+          {/* Nút chuyển đổi giữa Ly mô phỏng & Ảnh thật */}
+          <div style={{
+            display: 'flex',
+            gap: '6px',
+            backgroundColor: 'var(--bg-surface)',
+            padding: '4px',
+            borderRadius: '999px',
+            border: '1px solid var(--border-soft)',
+            marginBottom: '12px'
+          }}>
+            <button
+              type="button"
+              onClick={() => setPreviewMode('cup')}
+              style={{
+                padding: '5px 11px',
+                borderRadius: '999px',
+                border: 'none',
+                fontSize: '11.5px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                backgroundColor: previewMode === 'cup' ? 'var(--primary-600)' : 'transparent',
+                color: previewMode === 'cup' ? '#fff' : 'var(--text-muted)'
+              }}
+            >
+              Ly tương tác
+            </button>
+            <button
+              type="button"
+              onClick={() => setPreviewMode('photo')}
+              style={{
+                padding: '5px 11px',
+                borderRadius: '999px',
+                border: 'none',
+                fontSize: '11.5px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                backgroundColor: previewMode === 'photo' ? 'var(--primary-600)' : 'transparent',
+                color: previewMode === 'photo' ? '#fff' : 'var(--text-muted)'
+              }}
+            >
+              Ảnh thật
+            </button>
           </div>
+
+          {previewMode === 'cup' ? (
+            <CupVisualizer
+              productName={product.name}
+              size={selectedSize}
+              sugar={selectedSugar}
+              ice={selectedIce}
+              selectedToppings={selectedToppings}
+            />
+          ) : (
+            <div
+              className="drink-img-box"
+              style={{
+                width: '190px',
+                height: '190px',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                boxShadow: '0 6px 18px rgba(0, 0, 0, 0.08)',
+                marginBottom: '16px',
+                border: '1px solid var(--border-soft)'
+              }}
+            >
+              <img
+                src={imgErr ? fallbackImg : (product.image_url || fallbackImg)}
+                alt={product.name}
+                onError={() => setImgErr(true)}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </div>
+          )}
 
           <h2 style={{
             fontSize: '18px',
